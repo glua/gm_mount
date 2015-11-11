@@ -13,7 +13,7 @@ using namespace GarrysMod;
 
 IFileSystem *g_FileSystem;
 
-int yourmother_Mount(lua_State *state) {
+int mount_Mount(lua_State *state) {
 	LUA->CheckType(1, Lua::Type::STRING); // path
 	LUA->CheckType(2, Lua::Type::STRING); // pathId
 
@@ -34,7 +34,7 @@ int yourmother_Mount(lua_State *state) {
 	return 0;
 }
 
-int yourmother_Unmount(lua_State *state) {
+int mount_Unmount(lua_State *state) {
 	LUA->CheckType(1, Lua::Type::STRING); // path
 	LUA->CheckType(2, Lua::Type::STRING); // pathId
 
@@ -43,7 +43,7 @@ int yourmother_Unmount(lua_State *state) {
 	return 0;
 }
 
-int yourmother_PrintSearchPaths(lua_State *state) {
+int mount_PrintSearchPaths(lua_State *state) {
 	g_FileSystem->PrintSearchPaths();
 
 	return 0;
@@ -54,22 +54,22 @@ GMOD_MODULE_OPEN() {
 	g_FileSystem = (IFileSystem*)FileSystem_StdioFactory("VFileSystem022", NULL);
 
 	if (g_FileSystem == NULL) {
-		LUA->ThrowError("gm_yourmother: Error getting IFileSystem interface.");
+		LUA->ThrowError("gm_mount: Error getting IFileSystem interface.");
 
 		return 0;
 	}
 
 	LUA->PushSpecial(Lua::SPECIAL_GLOB);
 		LUA->CreateTable();
-			LUA->PushCFunction(yourmother_Mount);
+			LUA->PushCFunction(mount_Mount);
 			LUA->SetField(-2, "Mount");
 
-			LUA->PushCFunction(yourmother_Unmount);
+			LUA->PushCFunction(mount_Unmount);
 			LUA->SetField(-2, "Unmount");
 
-			LUA->PushCFunction(yourmother_PrintSearchPaths);
+			LUA->PushCFunction(mount_PrintSearchPaths);
 			LUA->SetField(-2, "PrintSearchPaths");
-		LUA->SetField(-2, "yourmother");
+		LUA->SetField(-2, "mount");
 
 		LUA->PushNumber(PATH_ADD_TO_HEAD);
 		LUA->SetField(-2, "PATH_ADD_TO_HEAD");

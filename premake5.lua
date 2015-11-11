@@ -1,4 +1,4 @@
-solution "gm_yourmother"
+solution "gm_mount"
 	language		"C++"
 	architecture	"x86"
 	location		"project"
@@ -15,7 +15,7 @@ solution "gm_yourmother"
 		flags		"symbols"	-- Generate debugging information
 		optimize	"On"		-- Optimize the build output for size and speed
 
-	project "gm_yourmother"
+	project "gm_mount"
 		kind	"SharedLib"
 		include	"LuaInterface"
 		include	"SourceSDK/Tier0"
