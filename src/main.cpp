@@ -19,13 +19,13 @@ int yourmother_Mount(lua_State *state) {
 
 	SearchPathAdd_t addtype = PATH_ADD_TO_HEAD;
 	if (LUA->IsType(3, Lua::Type::NUMBER)) {
-		addtype = LUA->GetNumber(3); // PATH_ADD enum
+		addtype = (SearchPathAdd_t)(int)LUA->GetNumber(3); // PATH_ADD enum
 	}
 
 	g_FileSystem->AddSearchPath(LUA->GetString(1), "GAME", addtype);
 	g_FileSystem->AddSearchPath(LUA->GetString(1), LUA->GetString(2), addtype); // allow for things like file.Find("blah", "cstrike")
 
-	if (LUA->IsType(4, Lua::Type::NUMER)) { // appid
+	if (LUA->IsType(4, Lua::Type::NUMBER)) { // appid
 		LUA->PushNumber(g_FileSystem->MountSteamContent(-LUA->GetNumber(4)));
 
 		return 1;
